@@ -109,7 +109,7 @@ export default function PricingCard({
 
   return (
     <Card
-      className={`w-[350px] relative overflow-hidden bg-white ${item.popular ? "border-2 border-purple-500 shadow-xl scale-105" : "border border-gray-200"} hover:shadow-lg transition-all duration-300`}
+      className={`w-full h-full relative overflow-hidden bg-white flex flex-col ${item.popular ? "border-2 border-purple-500 shadow-xl" : "border border-gray-200"} hover:shadow-lg transition-all duration-300`}
     >
       {item.popular && (
         <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-pink-50 opacity-30" />
@@ -141,7 +141,7 @@ export default function PricingCard({
           )}
         </CardDescription>
       </CardHeader>
-      <CardContent className="relative">
+      <CardContent className="relative flex-grow">
         <ul className="space-y-3">
           {features.map((feature, index) => (
             <li key={index} className="flex items-start gap-3">
@@ -151,7 +151,7 @@ export default function PricingCard({
           ))}
         </ul>
       </CardContent>
-      <CardFooter className="relative">
+      <CardFooter className="relative mt-auto">
         <Button
           onClick={async () => {
             if (item?.name?.toLowerCase() === "free") {

@@ -179,40 +179,46 @@ export default async function Home() {
               fees.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <PricingCard
-              key="free"
-              item={{
-                id: "free",
-                name: "Free",
-                amount: 0,
-                interval: "forever",
-                popular: false,
-              }}
-              user={user}
-            />
-            <PricingCard
-              key="weekly"
-              item={{
-                id: "weekly",
-                name: "Weekly",
-                amount: 1999,
-                interval: "week",
-                popular: false,
-              }}
-              user={user}
-            />
-            <PricingCard
-              key="monthly"
-              item={{
-                id: "monthly",
-                name: "Monthly",
-                amount: 3999,
-                interval: "month",
-                popular: true,
-              }}
-              user={user}
-            />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto items-stretch">
+            <div className="flex">
+              <PricingCard
+                key="free"
+                item={{
+                  id: "free",
+                  name: "Free",
+                  amount: 0,
+                  interval: "forever",
+                  popular: false,
+                }}
+                user={user}
+              />
+            </div>
+            <div className="flex">
+              <PricingCard
+                key="weekly"
+                item={{
+                  id: "weekly",
+                  name: "Weekly",
+                  amount: 1999,
+                  interval: "week",
+                  popular: false,
+                }}
+                user={user}
+              />
+            </div>
+            <div className="flex">
+              <PricingCard
+                key="monthly"
+                item={{
+                  id: "monthly",
+                  name: "Monthly",
+                  amount: 3999,
+                  interval: "month",
+                  popular: true,
+                }}
+                user={user}
+              />
+            </div>
           </div>
         </div>
       </section>
