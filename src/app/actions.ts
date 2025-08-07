@@ -7,7 +7,7 @@ import { createClient } from "../../supabase/server";
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
-  const fullName = formData.get("full_name")?.toString() || '';
+  const fullName = formData.get("full_name")?.toString() || "";
   const supabase = await createClient();
 
   if (!email || !password) {
@@ -18,14 +18,17 @@ export const signUpAction = async (formData: FormData) => {
     );
   }
 
-  const { data: { user }, error } = await supabase.auth.signUp({
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.signUp({
     email,
     password,
     options: {
       data: {
         full_name: fullName,
         email: email,
-      }
+      },
     },
   });
 
@@ -35,17 +38,14 @@ export const signUpAction = async (formData: FormData) => {
 
   if (user) {
     try {
-
-      const { error: updateError } = await supabase
-        .from('users')
-        .insert({
-          id: user.id,
-          user_id: user.id,
-          name: fullName,
-          email: email,
-          token_identifier: user.id,
-          created_at: new Date().toISOString()
-        });
+      const { error: updateError } = await supabase.from("users").insert({
+        id: user.id,
+        user_id: user.id,
+        name: fullName,
+        email: email,
+        token_identifier: user.id,
+        created_at: new Date().toISOString(),
+      });
 
       if (updateError) {
         // Error handling without console.error
@@ -166,10 +166,10 @@ export const checkUserSubscription = async (userId: string) => {
   const supabase = await createClient();
 
   const { data: subscription, error } = await supabase
-    .from('subscriptions')
-    .select('*')
-    .eq('user_id', userId)
-    .eq('status', 'active')
+    .from("subscriptions")
+    .select("*")
+    .eq("user_id", userId)
+    .eq("status", "active")
     .single();
 
   if (error) {
@@ -177,4 +177,71 @@ export const checkUserSubscription = async (userId: string) => {
   }
 
   return !!subscription;
+};
+
+export const analyzeVideoAction = async (formData: FormData) => {
+  const videoUrl = formData.get("videoUrl")?.toString();
+
+  if (!videoUrl) {
+    return {
+      error: "Video URL is required",
+    };
+  }
+
+  // Basic YouTube URL validation
+  const youtubeRegex = /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/;
+  if (!youtubeRegex.test(videoUrl)) {
+    return {
+      error: "Please enter a valid YouTube URL",
+    };
+  }
+
+  // Simulate video analysis with mock data
+  // In a real implementation, this would call YouTube API and perform NLP analysis
+  await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate processing time
+
+  const mockResults = {
+    videoTitle: "How to Start a Successful Online Business in 2024",
+    transcriptInsights: {
+      duration: "12:34",
+      wordCount: 1847,
+      sentiment: "Positive",
+      readabilityScore: 8.2,
+    },
+    keyThemes: [
+      { theme: "E-commerce Strategy", confidence: 0.92, mentions: 15 },
+      { theme: "Digital Marketing", confidence: 0.87, mentions: 12 },
+      { theme: "Customer Acquisition", confidence: 0.83, mentions: 9 },
+      { theme: "Revenue Optimization", confidence: 0.78, mentions: 7 },
+    ],
+    painPoints: [
+      {
+        painPoint: "Difficulty finding reliable suppliers",
+        confidence: 0.89,
+        context:
+          "Many entrepreneurs struggle with supplier reliability and quality control",
+      },
+      {
+        painPoint: "High customer acquisition costs",
+        confidence: 0.85,
+        context:
+          "Rising advertising costs making it harder to acquire customers profitably",
+      },
+      {
+        painPoint: "Inventory management complexity",
+        confidence: 0.81,
+        context: "Balancing stock levels while minimizing holding costs",
+      },
+    ],
+    opportunities: [
+      "Supplier verification services",
+      "Cost-effective marketing automation tools",
+      "AI-powered inventory management solutions",
+    ],
+  };
+
+  return {
+    success: true,
+    results: mockResults,
+  };
 };
