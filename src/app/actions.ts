@@ -196,52 +196,68 @@ export const analyzeVideoAction = async (formData: FormData) => {
     };
   }
 
-  // Simulate video analysis with mock data
-  // In a real implementation, this would call YouTube API and perform NLP analysis
-  await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate processing time
+  try {
+    const { YouTubeService } = await import("@/lib/youtube");
+    const { NLPAnalysis } = await import("@/lib/nlp-analysis");
 
-  const mockResults = {
-    videoTitle: "How to Start a Successful Online Business in 2024",
-    transcriptInsights: {
-      duration: "12:34",
-      wordCount: 1847,
-      sentiment: "Positive",
-      readabilityScore: 8.2,
-    },
-    keyThemes: [
-      { theme: "E-commerce Strategy", confidence: 0.92, mentions: 15 },
-      { theme: "Digital Marketing", confidence: 0.87, mentions: 12 },
-      { theme: "Customer Acquisition", confidence: 0.83, mentions: 9 },
-      { theme: "Revenue Optimization", confidence: 0.78, mentions: 7 },
-    ],
-    painPoints: [
-      {
-        painPoint: "Difficulty finding reliable suppliers",
-        confidence: 0.89,
-        context:
-          "Many entrepreneurs struggle with supplier reliability and quality control",
-      },
-      {
-        painPoint: "High customer acquisition costs",
-        confidence: 0.85,
-        context:
-          "Rising advertising costs making it harder to acquire customers profitably",
-      },
-      {
-        painPoint: "Inventory management complexity",
-        confidence: 0.81,
-        context: "Balancing stock levels while minimizing holding costs",
-      },
-    ],
-    opportunities: [
-      "Supplier verification services",
-      "Cost-effective marketing automation tools",
-      "AI-powered inventory management solutions",
-    ],
-  };
+    // Extract video ID from URL
+    const videoId = YouTubeService.extractVideoId(videoUrl);
+    if (!videoId) {
+      return {
+        error: "Invalid YouTube URL format",
+      };
+    }
 
-  return {
-    success: true,
-    results: mockResults,
-  };
+    // Get video metadata
+    const metadata = await YouTubeService.getVideoMetadata(videoId);
+    if (!metadata) {
+      return {
+        error: "Could not fetch video information. Please check if the video exists and is public.",
+      };
+    }
+
+    // Get video transcript
+    const transcript = await YouTubeService.getVideoTranscript(videoId);
+    let fullTranscript = '';
+    
+    if (transcript.length > 0) {
+      // Use transcript if available
+      fullTranscript = transcript.map(segment => segment.text).join(' ');
+    } else {
+      // Fallback: Use video description if transcript is not available
+      console.log('Transcript not available, using description as fallback');
+      if (metadata.description && metadata.description.length > 100) {
+        fullTranscript = metadata.description;
+      } else {
+        return {
+          error: "Could not fetch transcript or sufficient description. The video may not have captions available and has limited description.",
+        };
+      }
+    }
+
+    // Analyze the transcript
+    const results = NLPAnalysis.analyzeTranscript(
+      fullTranscript,
+      metadata.title,
+      metadata.duration
+    );
+
+    return {
+      success: true,
+      results,
+    };
+  } catch (error) {
+    console.error("YouTube analysis error:", error);
+    
+    // Check if it's an API key issue
+    if (error instanceof Error && error.message.includes('API key')) {
+      return {
+        error: "YouTube API is not configured. Please check your API key settings.",
+      };
+    }
+
+    return {
+      error: "An error occurred while analyzing the video. Please try again later.",
+    };
+  }
 };

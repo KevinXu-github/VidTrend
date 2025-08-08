@@ -79,7 +79,7 @@ export default function Hero() {
 
       <div className="relative pt-24 pb-16 sm:pt-32 sm:pb-24">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto">
+          <div className="text-center max-w-hero mx-auto">
             <div className="flex items-center justify-center gap-2 mb-6">
               <Youtube className="w-8 h-8 text-red-600" />
               <TrendingUp className="w-8 h-8 text-orange-600" />
@@ -100,7 +100,7 @@ export default function Hero() {
             </p>
 
             {/* Instant Demo Section */}
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-8 mb-12 max-w-3xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-10 mb-12 max-w-demo mx-auto">
               <div className="flex items-center gap-2 mb-6">
                 <Play className="w-6 h-6 text-red-600" />
                 <h2 className="text-2xl font-bold text-gray-900">
@@ -115,13 +115,13 @@ export default function Hero() {
                     placeholder="Paste a YouTube URL here to see instant analysis"
                     value={videoUrl}
                     onChange={(e) => setVideoUrl(e.target.value)}
-                    className="flex-1 h-12 text-lg"
+                    className="flex-1 h-14 text-lg px-4 py-3"
                     disabled={isAnalyzing}
                   />
                   <Button
                     type="submit"
                     disabled={isAnalyzing || !videoUrl.trim()}
-                    className="h-12 px-8 bg-red-600 hover:bg-red-700 text-white font-semibold"
+                    className="h-14 px-8 bg-red-600 hover:bg-red-700 text-white font-semibold"
                   >
                     {isAnalyzing ? (
                       <>
@@ -145,7 +145,7 @@ export default function Hero() {
               )}
 
               {results && (
-                <div className="mt-8 space-y-6">
+                <div className="mt-8 space-y-6 max-w-results mx-auto">
                   <div className="text-left">
                     <h3 className="text-xl font-bold text-gray-900 mb-4">
                       Analysis Results

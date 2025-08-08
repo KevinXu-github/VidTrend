@@ -18,6 +18,11 @@ const config = {
       },
     },
     extend: {
+      maxWidth: {
+        'demo': '800px',
+        'hero': '700px',
+        'results': '900px',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
