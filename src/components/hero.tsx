@@ -80,9 +80,16 @@ export default function Hero() {
       <div className="relative pt-24 pb-16 sm:pt-32 sm:pb-24">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-hero mx-auto">
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <Youtube className="w-8 h-8 text-red-600" />
-              <TrendingUp className="w-8 h-8 text-orange-600" />
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <img 
+                src="/VidTrend v1.png" 
+                alt="VidTrend" 
+                className="h-12 w-auto"
+              />
+              <div className="flex gap-2">
+                <Youtube className="w-8 h-8 text-red-600" />
+                <TrendingUp className="w-8 h-8 text-orange-600" />
+              </div>
             </div>
 
             <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 mb-8 tracking-tight">

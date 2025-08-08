@@ -7,8 +7,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Tempo - Modern SaaS Starter",
-  description: "A modern full-stack starter template powered by Next.js",
+  title: "VidTrend - YouTube Video Analysis & Market Intelligence",
+  description: "Transform YouTube content into actionable business insights with AI-powered analysis. Discover market trends, pain points, and opportunities.",
 };
 
 export default function RootLayout({

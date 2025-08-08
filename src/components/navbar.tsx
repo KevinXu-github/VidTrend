@@ -14,8 +14,13 @@ export default async function Navbar() {
   return (
     <nav className="w-full border-b border-gray-200 bg-white py-2">
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link href="/" prefetch className="text-xl font-bold text-red-600">
-          VidTrend
+        <Link href="/" prefetch className="flex items-center gap-2">
+          <img 
+            src="/VidTrend v1.png" 
+            alt="VidTrend" 
+            className="h-8 w-auto"
+          />
+          <span className="text-xl font-bold text-red-600">VidTrend</span>
         </Link>
         <div className="flex gap-4 items-center">
           {user ? (

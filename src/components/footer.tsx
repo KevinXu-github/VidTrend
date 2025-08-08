@@ -7,6 +7,21 @@ export default function Footer() {
   return (
     <footer className="bg-gray-50 border-t border-gray-100">
       <div className="container mx-auto px-4 py-12">
+        {/* Logo Section */}
+        <div className="mb-12">
+          <Link href="/" className="flex items-center gap-2 mb-4">
+            <img 
+              src="/VidTrend v1.png" 
+              alt="VidTrend" 
+              className="h-8 w-auto"
+            />
+            <span className="text-xl font-bold">VidTrend</span>
+          </Link>
+          <p className="text-gray-600 max-w-md">
+            Transform YouTube content into actionable business insights with AI-powered analysis.
+          </p>
+        </div>
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           {/* Product Column */}
           <div>
